@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import css from '.components/Modal/Modal.module.css';
+import css from '@/components/Modal/Modal.module.css';
 import NotePreview from '@/components/NotePreview/NotePreview';
 
 export default function NoteModalPage({ params }: { params: { id: string } }) {
