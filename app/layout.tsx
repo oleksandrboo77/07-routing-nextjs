@@ -1,5 +1,8 @@
 import './globals.css';
 import type { ReactNode } from 'react';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export default function RootLayout({
   children,
@@ -11,8 +14,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        {modal}
+        <TanStackProvider>
+          <Header />
+          {children}
+          {modal}
+          <Footer />
+        </TanStackProvider>
       </body>
     </html>
   );
