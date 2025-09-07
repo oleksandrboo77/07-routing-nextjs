@@ -6,20 +6,16 @@ import './globals.css';
 
 export const metadata: Metadata = { title: 'NoteHub' };
 
-export default function RootLayout({
+export default function NotesRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <TanStackProvider>
-          <Header />
-          {children}
-          <Footer />
-        </TanStackProvider>
-      </body>
-    </html>
+    <TanStackProvider>
+      <Header />
+      {children}
+      <Footer />
+    </TanStackProvider>
   );
 }
