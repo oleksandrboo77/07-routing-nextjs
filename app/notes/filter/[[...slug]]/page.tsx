@@ -22,13 +22,8 @@ function parseTag(slug?: string[]): NoteTag | undefined {
   return allowed.includes(raw as NoteTag) ? (raw as NoteTag) : undefined;
 }
 
-export default async function NotesFilterPage({
-  params,
-}: {
-  params: Promise<Params>;
-}) {
-  const { slug } = await params;
-  const tag = parseTag(slug);
+export default async function NotesFilterPage({ params }: { params: Params }) {
+  const tag = parseTag(params.slug);
 
   const qc = new QueryClient();
   await qc.prefetchQuery({
