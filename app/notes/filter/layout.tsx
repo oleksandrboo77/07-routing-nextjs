@@ -1,17 +1,36 @@
+import './globals.css';
+import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import css from './FilterLayout.module.css';
 
-export default function FilterLayout({
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+
+export const metadata: Metadata = {
+  title: 'NoteHub',
+  description: 'Notes app with Next.js App Router, React Query, SSR/CSR',
+};
+
+export default function RootLayout({
   children,
-  sidebar,
+  modal,
 }: {
   children: ReactNode;
-  sidebar: ReactNode;
+  modal: ReactNode;
 }) {
   return (
-    <div className={css.wrapper}>
-      <aside className={css.sidebar}>{sidebar}</aside>
-      <main className={css.content}>{children}</main>
-    </div>
+    <html lang="en">
+      <body>
+        <TanStackProvider>
+          <Header />
+
+          <div id="page-root">{children}</div>
+
+          <Footer />
+
+          {modal}
+        </TanStackProvider>
+      </body>
+    </html>
   );
 }
