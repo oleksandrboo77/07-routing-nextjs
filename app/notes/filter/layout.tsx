@@ -6,10 +6,10 @@ export default function FilterLayout({
   sidebar,
 }: {
   children: ReactNode;
-  sidebar: ReactNode;
+  sidebar?: ReactNode;
 }) {
   return (
-    <div className={css.notesWrapper}>
+    <div className={css.wrapper}>
       <aside className={css.sidebar}>{sidebar}</aside>
       <main className={css.content}>{children}</main>
     </div>
