@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import css from '@/LayoutNotes.module.css';
+import css from './Layout.module.css';
 
 export default function NotesFilterLayout({
   children,
