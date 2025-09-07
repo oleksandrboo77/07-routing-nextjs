@@ -1,52 +1,50 @@
 .menuContainer {
   position: relative;
-  display: inline-block;
 }
-
 .menuButton {
-  background-color: #f5f5f5;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 8px 16px;
-  font-size: 16px;
-  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 10px;
   cursor: pointer;
-  transition:
-    background-color 0.3s ease,
-    box-shadow 0.2s ease;
 }
-
 .menuList {
-  display: none;
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
-  background-color: #333;
-  border: 1px solid #444;
-  border-radius: 8px;
-  padding: 8px 0;
   min-width: 180px;
-  z-index: 1000;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: white;
+  display: none;
+  z-index: 20;
 }
-
-.menuList.open {
+.open {
   display: block;
 }
-
 .menuItem {
-  list-style: none;
 }
-
 .menuLink {
   display: block;
-  padding: 8px 16px;
-  color: #f0f0f0;
+  padding: 8px 10px;
   text-decoration: none;
-  font-size: 15px;
-  transition: background-color 0.2s ease;
+  border-radius: 8px;
 }
-
 .menuLink:hover {
-  background-color: #f0f0f0;
-  color: #333;
+  background: rgba(0, 0, 0, 0.06);
+}
+@media (prefers-color-scheme: dark) {
+  .menuButton {
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .menuList {
+    background: #111;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  .menuLink:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
 }

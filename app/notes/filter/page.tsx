@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
-export default function NotesFilterIndex() {
+export default function FilterIndexPage() {
   redirect('/notes/filter/All');
 }

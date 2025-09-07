@@ -1,50 +1,35 @@
 'use client';
-
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
+import type { NoteTag } from '@/types/note';
 import css from './TagsMenu.module.css';
 
-const TAGS = [
-  'All',
-  'Todo',
-  'Work',
-  'Personal',
-  'Meeting',
-  'Shopping',
-] as const;
+const TAGS: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
 
 export default function TagsMenu() {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const onDocClick = (e: MouseEvent) => {
-      if (!ref.current?.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('click', onDocClick);
-    return () => document.removeEventListener('click', onDocClick);
-  }, []);
-
   return (
-    <div className={css.menuContainer} ref={ref}>
+    <div className={css.menuContainer} onMouseLeave={() => setOpen(false)}>
       <button
-        type="button"
         className={css.menuButton}
-        aria-expanded={open}
+        onClick={() => setOpen(v => !v)}
         aria-haspopup="menu"
-        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
       >
         Notes ▾
       </button>
-
       <ul className={`${css.menuList} ${open ? css.open : ''}`} role="menu">
-        {TAGS.map((tag) => (
-          <li key={tag} className={css.menuItem} role="none">
+        <li className={css.menuItem} role="none">
+          <Link className={css.menuLink} href="/notes/filter/All" role="menuitem" onClick={() => setOpen(false)}>
+            All notes
+          </Link>
+        </li>
+        {TAGS.map(tag => (
+          <li className={css.menuItem} key={tag} role="none">
             <Link
-              href={`/notes/filter/${tag}`}
               className={css.menuLink}
+              href={`/notes/filter/${encodeURIComponent(tag)}`}
               role="menuitem"
-              prefetch={false}
               onClick={() => setOpen(false)}
             >
               {tag}

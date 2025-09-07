@@ -1,16 +1,34 @@
-import NotesClient from './Notes.client';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import { fetchNotes } from '@/lib/api';
 import type { NoteTag } from '@/types/note';
+import NotesClient from './Notes.client';
 
-type Params = { slug: string[] | undefined };
-
-function normalizeTag(slug: string[] | undefined): NoteTag | undefined {
-  if (!slug || slug.length === 0) return undefined;
-  const tag = slug[0];
-  if (tag === 'All') return undefined;
-  return tag as NoteTag;
+function parseTag(slug: string[] | string | undefined): NoteTag | undefined {
+  if (!slug) return undefined;
+  const seg = Array.isArray(slug) ? slug[0] : slug;
+  if (seg === 'All') return undefined;
+  // Narrow to NoteTag values
+  const allowed: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
+  return allowed.includes(seg as NoteTag) ? (seg as NoteTag) : undefined;
 }
 
-export default function NotesFilterPage({ params }: { params: Params }) {
-  const tag = normalizeTag(params.slug);
-  return <NotesClient initialTag={tag} />;
+export default async function NotesFilteredPage({ params }: { params: { slug?: string[] } }) {
+  const initialTag = parseTag(params?.slug);
+  const qc = new QueryClient();
+  await qc.prefetchQuery({
+    queryKey: ['notes', 1, 12, '', initialTag ?? ''],
+    queryFn: ({ signal }) => initialTag
+      ? fetchNotes(1, 12, { search: '', tag: initialTag }, signal)
+      : fetchNotes(1, 12, { search: '' }, signal),
+  });
+
+  return (
+    <HydrationBoundary state={dehydrate(qc)}>
+      <NotesClient initialTag={initialTag} />
+    </HydrationBoundary>
+  );
 }
