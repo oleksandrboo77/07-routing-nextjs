@@ -25,9 +25,11 @@ function parseTag(slug: string[] | string | undefined): NoteTag | undefined {
 export default async function NotesFilteredPage({
   params,
 }: {
-  params: { slug?: string[] };
+  params: Promise<{ slug: string[] }>;
 }) {
-  const initialTag = parseTag(params?.slug);
+  const { slug } = await params;
+  const initialTag = parseTag(slug);
+
   const qc = new QueryClient();
   await qc.prefetchQuery({
     queryKey: ['notes', 1, 12, '', initialTag ?? ''],
